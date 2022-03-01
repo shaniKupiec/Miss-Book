@@ -2,6 +2,7 @@ import { utilService } from './util-service.js'
 import { storageService } from './async-storage-service.js'
 
 const BOOKS_KEY = 'books'
+const API_KEY = 'AIzaSyAzpne8m2U-5wNE-X3cov5IyqRzQkPIzlo'
 _createBooks()
 
 export const bookService = {
@@ -10,6 +11,8 @@ export const bookService = {
   save,
   addReview,
   removeReview,
+  getBooksByName,
+  addGoogleBook,
 }
 
 function query() {
@@ -402,4 +405,46 @@ function _createBooks() {
     ]
   }
   utilService.saveToStorage(BOOKS_KEY, books)
+}
+
+function getBooksByName(search) {
+  const urlBooks = `https://www.googleapis.com/books/v1/volumes?q=${search}&keyes&key=${API_KEY}`
+  const prm = axios
+    .get(urlBooks)
+    .then((res) => {
+      // console.log(res)
+      // console.log(res.data)
+      console.log(res.data.items)
+      // saveToStorage(USERS_KEY, res.data)
+      return res.data.items
+    })
+    .catch((err) => {
+      console.log(err, 'oops')
+    })
+  return prm
+}
+
+function addGoogleBook(googleBook){
+  var volInfo = googleBook.volumeInfo
+  var publishedDate = volInfo.publishedDate.slice(0, 4)
+  var listPrice = {
+    amount: 109,
+    currencyCode: googleBook.saleInfo.country,
+    isOnSale: false,
+  }
+  _createBook(googleBook.id, volInfo.title, volInfo.subtitle, volInfo.authors, publishedDate, volInfo.description, volInfo.pageCount, volInfo.imageLinks.thumbnail , listPrice)
+}
+
+function _createBook(id, title, subtitle, authors, publishedDate, description, pageCount, thumbnail, listPrice) {
+  return {
+    id,
+    title,
+    subtitle,
+    authors,
+    publishedDate,
+    description,
+    pageCount,
+    thumbnail,
+    listPrice,
+  }
 }

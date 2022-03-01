@@ -1,8 +1,9 @@
 export default {
   // props: [""],
   template: `
-        <section>
-        home page
+        <section class="home-page">
+        <img class="bg-img" src="../imgs/book-bg.jpg">
+        <div class="home-quote">If you don't like to read, you haven't found the right book</div>
         </section>
     `,
   components: {},

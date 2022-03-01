@@ -32,6 +32,9 @@ export default {
             <add-review v-if="editReview" @new-review="addReview" @close="toggleEditReview"></add-review>
             <button @click="close" @keyup.esc="close">close</button>
             </div>
+
+            <router-link :to="'/book/'+book.prevBookId">Prev Book</router-link> | 
+            <router-link :to="'/book/'+book.nextBookId">Next Book</router-link>
         </section>
     `,
   components: {
@@ -127,6 +130,12 @@ export default {
     getReviews() {
       return this.book.reviews
     },
+    // carImgUrl() {
+    //   return `img/${this.car.vendor}.png`;
+    // },
+    // carId() {
+    //     return this.$route.params.carId
+    // }
   },
   unmounted() {},
 }

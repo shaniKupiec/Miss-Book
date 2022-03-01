@@ -6,7 +6,7 @@ export const utilService = {
   makeId2,
 }
 
-function formatedPrice(lang, currency, price) {
+function formatedPrice(lang , currency, price) {
   return new Intl.NumberFormat(lang, { style: 'currency', currency }).format(price)
 }
 
