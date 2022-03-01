@@ -5,19 +5,18 @@ export default {
   template: `
         <section>
           <button v-if="!showModal" @click="showModal = !showModal">Add New Book</button>
-          <section v-else class="add-book-modal">
-            <input type="text" @keyup.enter="onSearch" v-model="search" placeholder="Search for new book" list="search-list">
-            <ul id="search-list">
-              <li v-for="book in booksList" key="book.id" @click="saveBook(book.id)">
-              {{book.volumeInfo.title}}
-              </li>
-            </ul>
-            <!-- <datalist id="search-list">
-              <option v-for="book in booksList" key="book.id" @click="saveBook" :value="book.volumeInfo.title">
-            </datalist> -->
-            <button @click="saveBook">add</button>
-                 <!-- <router-link v-for="book in books" key="book.id" :to="/book/+book.id"> -->
-             <!-- :value="chosenBook" -->
+          <section v-else class="add-book-modal-container">
+            <div class="add-book-modal flex column justify-center align-center">
+              <div class="search-google-nav">
+                <input type="text" @keyup.enter="onSearch" v-model="search" placeholder="Search for new book">
+                <button @click="onSearch">🔍</button>
+              </div>
+              <ul class="clean-list book-options">
+                <li v-for="book in booksList" key="book.id" class="book-option" @click="saveBook(book)">
+                  {{book.volumeInfo.title}}
+                </li>
+              </ul>
+            </div>
           </section>
         </section>
     `,
@@ -34,18 +33,17 @@ export default {
   mounted() {},
   methods: {
     onSearch(){
-      console.log('hi', this.search);
+      console.log('this is your search:', this.search);
       bookService.getBooksByName(this.search)
       .then(res => this.booksList = res)
     },
-    saveBook(){
-      console.log('save it!', this.search);
-      // bookService.addGoogleBook(book)
-      // .then(() => eventBus.showSuccessMsg('book added successfuly'))
-      // .catch((error) => {
-      //   console.log(error)
-      //   eventBus.showErrorMsg('Error - please try again later')
-      // })
+    saveBook(newBook){
+      bookService.addGoogleBook(newBook)
+      .then(() => eventBus.showSuccessMsg('book added successfuly'))
+      .catch((error) => {
+        console.log(error)
+        eventBus.showErrorMsg('Error - please try again later')
+      })
     }
   },
   computed: {},

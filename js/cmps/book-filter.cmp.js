@@ -13,7 +13,6 @@ export default {
                     <input type="range" @click="setFilter" v-model="filterBy.to" min="50" max="200" oninput="this.nextElementSibling.value = this.value">
                     <output>180</output>
                 </span>
-                <span> 🔍 </span>
             </div>
         </section>
     `,
