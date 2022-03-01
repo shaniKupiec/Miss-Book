@@ -10,6 +10,10 @@
     margin: 0 10px;
 }
 
+.search-nav input{
+    cursor: pointer;
+}
+
 .books-area{
     flex-wrap: wrap;
 }

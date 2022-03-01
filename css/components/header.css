@@ -15,10 +15,10 @@ header{
     padding-bottom: 17px;
 }
 
-.router-link-active{
+.nav-bar .router-link-active{
 }
 
-.router-link-exact-active{
+.nav-bar .router-link-exact-active{
     color: var(--clrGreenNav);
     padding-bottom: 17px;
     box-shadow: inset 0px -2px 0px 0px var(--clrGreenNav);

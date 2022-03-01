@@ -1,6 +1,6 @@
 import { bookService } from '../services/books-service.js'
 import { utilService } from '../services/util-service.js'
-import { eventBus } from '../services/eventBus-service.js';
+import { eventBus } from '../services/eventBus-service.js'
 import longText from '../cmps/long-text.cmp.js'
 import addReview from '../cmps/add-review.cmp.js'
 import bookReview from '../cmps/book-review.cmp.js'
@@ -61,23 +61,34 @@ export default {
     remove(reviewId) {
       console.log('removed', reviewId)
 
-      bookService.removeReview(this.book.id, reviewId)
-      .then((book) => {
-        this.book = book
-        eventBus.showSuccessMsg('review removed successfuly')
-        // var currReviewIdx = this.book.reviews.findIndex((review) => review.id === reviewId)
-        // this.book.reviews.splice(currReviewIdx, 1)
-      })
+      bookService
+        .removeReview(this.book.id, reviewId)
+        .then((book) => {
+          this.book = book
+          eventBus.showSuccessMsg('review removed successfuly')
+          // var currReviewIdx = this.book.reviews.findIndex((review) => review.id === reviewId)
+          // this.book.reviews.splice(currReviewIdx, 1)
+        })
+        .catch((error) => {
+          console.log(error)
+          eventBus.showErrorMsg('Error - please try again later')
+        })
     },
     addReview(newReview) {
-      bookService.addReview(this.book.id, newReview).then((book) => {
-        console.log('recived', newReview)
-        this.book = book
-        eventBus.showSuccessMsg('review added successfuly')
-        // if (!this.book.reviews) this.book.reviews = []
-        // this.book.reviews.push(newReview)
-        this.toggleEditReview()
-      })
+      bookService
+        .addReview(this.book.id, newReview)
+        .then((book) => {
+          console.log('recived', newReview)
+          this.book = book
+          eventBus.showSuccessMsg('review added successfuly')
+          // if (!this.book.reviews) this.book.reviews = []
+          // this.book.reviews.push(newReview)
+          this.toggleEditReview()
+        })
+        .catch((error) => {
+          console.log(error)
+          eventBus.showErrorMsg('Error - please try again later')
+        })
     },
     toggleEditReview() {
       this.editReview = !this.editReview
