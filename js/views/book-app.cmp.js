@@ -7,7 +7,7 @@ import bookAdd from '../cmps/book-add.cmp.js';
 export default {
     template: `
         <section class="main-layout">
-            <book-add></book-add>
+            <book-add @add-book="reload"></book-add>
             <book-filter @filtered="setFilter"></book-filter>
             <book-list :books="booksToShow"></book-list>
         </section>
@@ -25,14 +25,17 @@ export default {
         };
     },
     created() {
-        bookService.query()
-            .then(books => this.books = books)
+        this.reload()
     },
     methods: {
         setFilter(filterBy) {
             console.log('set filter by', filterBy);
             this.filterBy = filterBy;
         },
+        reload(){
+            bookService.query()
+            .then(books => this.books = books)
+        }
     },
     computed: {
         booksToShow() {

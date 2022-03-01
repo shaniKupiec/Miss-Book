@@ -38,6 +38,7 @@
 .book-option {
   padding-left: 2em;
   text-indent: -1em;
+  cursor: pointer;
 }
 
 .book-option:before {

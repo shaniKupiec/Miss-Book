@@ -4,9 +4,10 @@ export const utilService = {
   makeId,
   formatedPrice,
   makeId2,
+  getRandomInt,
 }
 
-function formatedPrice(lang , currency, price) {
+function formatedPrice(lang, currency, price) {
   return new Intl.NumberFormat(lang, { style: 'currency', currency }).format(price)
 }
 
@@ -17,6 +18,12 @@ function saveToStorage(key, value) {
 function loadFromStorage(key) {
   let data = localStorage.getItem(key)
   return data ? JSON.parse(data) : undefined
+}
+
+function getRandomInt(min, max) {
+  min = Math.ceil(min)
+  max = Math.floor(max)
+  return Math.floor(Math.random() * (max - min + 1) + min)
 }
 
 function makeId(length = 8) {

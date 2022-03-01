@@ -30,6 +30,10 @@ function save(book) {
   return storageService.put(BOOKS_KEY, book)
 }
 
+function _addBook(newBook){
+  return storageService.post(BOOKS_KEY, newBook)
+}
+
 // function _setNextPrevBookId(book) {
 //   return storageService.query(BOOKS_KEY).then(books => {
 //       const bookIdx = books.findIndex(currBook => currBook.id === book.id)
@@ -425,14 +429,16 @@ function getBooksByName(search) {
 }
 
 function addGoogleBook(googleBook){
+  console.log(googleBook);
   var volInfo = googleBook.volumeInfo
-  var publishedDate = volInfo.publishedDate.slice(0, 4)
+  var publishedDate = volInfo.publishedDate.slice(0, 4) || '2000'
   var listPrice = {
-    amount: 109,
-    currencyCode: googleBook.saleInfo.country,
+    amount: utilService.getRandomInt(30, 150),
+    currencyCode: 'USD',
     isOnSale: false,
   }
-  _createBook(googleBook.id, volInfo.title, volInfo.subtitle, volInfo.authors, publishedDate, volInfo.description, volInfo.pageCount, volInfo.imageLinks.thumbnail , listPrice)
+  var newBook = _createBook(googleBook.id, volInfo.title, volInfo.subtitle, volInfo.authors, publishedDate, volInfo.description, volInfo.pageCount, volInfo.imageLinks.thumbnail , listPrice)
+  return _addBook(newBook)
 }
 
 function _createBook(id, title, subtitle, authors, publishedDate, description, pageCount, thumbnail, listPrice) {
@@ -442,7 +448,7 @@ function _createBook(id, title, subtitle, authors, publishedDate, description, p
     subtitle,
     authors,
     publishedDate,
-    description,
+    description: description || 'description',
     pageCount,
     thumbnail,
     listPrice,

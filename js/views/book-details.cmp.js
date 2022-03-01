@@ -28,13 +28,13 @@ export default {
                 <book-review :review="review" @remove-review="remove"></book-review>
               </li>
             </ul>
+            <router-link :to="'/book/'+book.prevBookId">Prev Book</router-link> | 
+            <router-link :to="'/book/'+book.nextBookId">Next Book</router-link>
             <button @click="toggleEditReview">Add Review</button>
             <add-review v-if="editReview" @new-review="addReview" @close="toggleEditReview"></add-review>
             <button @click="close" @keyup.esc="close">close</button>
             </div>
 
-            <router-link :to="'/book/'+book.prevBookId">Prev Book</router-link> | 
-            <router-link :to="'/book/'+book.nextBookId">Next Book</router-link>
         </section>
     `,
   components: {
@@ -69,8 +69,6 @@ export default {
         .then((book) => {
           this.book = book
           eventBus.showSuccessMsg('review removed successfuly')
-          // var currReviewIdx = this.book.reviews.findIndex((review) => review.id === reviewId)
-          // this.book.reviews.splice(currReviewIdx, 1)
         })
         .catch((error) => {
           console.log(error)
@@ -84,8 +82,6 @@ export default {
           console.log('recived', newReview)
           this.book = book
           eventBus.showSuccessMsg('review added successfuly')
-          // if (!this.book.reviews) this.book.reviews = []
-          // this.book.reviews.push(newReview)
           this.toggleEditReview()
         })
         .catch((error) => {
@@ -130,9 +126,6 @@ export default {
     getReviews() {
       return this.book.reviews
     },
-    // carImgUrl() {
-    //   return `img/${this.car.vendor}.png`;
-    // },
     // carId() {
     //     return this.$route.params.carId
     // }

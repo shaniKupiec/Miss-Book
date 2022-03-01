@@ -1,4 +1,5 @@
-import { bookService } from '../services/books-service.js';
+import { bookService } from '../services/books-service.js'
+import { eventBus } from '../services/eventBus-service.js'
 
 export default {
   // props: [""],
@@ -24,27 +25,32 @@ export default {
   created() {},
   data() {
     return {
-        search: null,
-        booksList: [],
-        showModal: false
-        // chosenBook: null
+      search: null,
+      booksList: [],
+      showModal: false,
+      // chosenBook: null
     }
   },
   mounted() {},
   methods: {
-    onSearch(){
-      console.log('this is your search:', this.search);
-      bookService.getBooksByName(this.search)
-      .then(res => this.booksList = res)
+    onSearch() {
+      console.log('this is your search:', this.search)
+      bookService.getBooksByName(this.search).then((res) => (this.booksList = res))
     },
-    saveBook(newBook){
-      bookService.addGoogleBook(newBook)
-      .then(() => eventBus.showSuccessMsg('book added successfuly'))
-      .catch((error) => {
-        console.log(error)
-        eventBus.showErrorMsg('Error - please try again later')
-      })
-    }
+    saveBook(newBook) {
+      bookService
+        .addGoogleBook(newBook)
+        .then(() => {
+          eventBus.showSuccessMsg('book added successfuly')
+          this.showModal = false
+          this.$emit('add-book')
+        })
+        .catch((error) => {
+          console.log(error)
+          eventBus.showErrorMsg('Error - please try again later')
+          this.showModal = false
+        })
+    },
   },
   computed: {},
   unmounted() {},
