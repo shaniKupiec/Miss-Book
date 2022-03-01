@@ -4,18 +4,21 @@ export default {
   // props: [""],
   template: `
         <section>
-            <div>
-                <input type="text" @keyup.enter="onSearch" v-model="search" placeholder="Search for new book" list="search-list">
-                <datalist id="search-list">
-                  <option v-for="book in booksList" key="book.id" @click="saveBook" :value="book.volumeInfo.title">
-                </datalist>
-                <!-- <datalist id="search-list">
-                  <option v-for="book in booksList" key="book.id" @click="saveBook" :value="book.volumeInfo.title">
-                </datalist> -->
-                <button @click="saveBook">add</button>
-                    <!-- <router-link v-for="book in books" key="book.id" :to="/book/+book.id"> -->
-                <!-- :value="chosenBook" -->
-            </div>
+          <button v-if="!showModal" @click="showModal = !showModal">Add New Book</button>
+          <section v-else class="add-book-modal">
+            <input type="text" @keyup.enter="onSearch" v-model="search" placeholder="Search for new book" list="search-list">
+            <ul id="search-list">
+              <li v-for="book in booksList" key="book.id" @click="saveBook(book.id)">
+              {{book.volumeInfo.title}}
+              </li>
+            </ul>
+            <!-- <datalist id="search-list">
+              <option v-for="book in booksList" key="book.id" @click="saveBook" :value="book.volumeInfo.title">
+            </datalist> -->
+            <button @click="saveBook">add</button>
+                 <!-- <router-link v-for="book in books" key="book.id" :to="/book/+book.id"> -->
+             <!-- :value="chosenBook" -->
+          </section>
         </section>
     `,
   components: {},
@@ -24,6 +27,7 @@ export default {
     return {
         search: null,
         booksList: [],
+        showModal: false
         // chosenBook: null
     }
   },

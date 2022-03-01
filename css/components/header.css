@@ -11,6 +11,10 @@ header{
     cursor: pointer;
 }
 
+.logo{
+    width: 140px;
+}
+
 .nav-bar > *{
     padding-bottom: 17px;
 }
