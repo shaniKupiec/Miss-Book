@@ -15,7 +15,7 @@ export default {
             <h1 class="book-title">{{book.title}}</h1>
             <h3 class="book-subtitle">{{book.subtitle}}</h3>
             <h6>by {{getAuthors}}</h6>
-            <div :class="getPriceColor">{{formatedPrice}}</div>
+            <div :class="getPriceColor">{{formattedPrice}}</div>
             <ul class="clean-list unique-list">
               <li v-for="data in uniqueData">
                 <img class="icons" src="imgs/v-icon.png" alt="">
@@ -23,13 +23,14 @@ export default {
             </ul>
             <long-text :text="book.description" :length="100"></long-text>
             <span>REVIEWS</span>
-            <ul class="clean-list">
+            <ul v-if="book.reviews && book.reviews.length" class="clean-list">
               <li v-for="review in getReviews">
                 <book-review :review="review" @remove-review="remove"></book-review>
               </li>
             </ul>
-            <router-link :to="'/book/'+book.prevBookId">Prev Book</router-link> | 
-            <router-link :to="'/book/'+book.nextBookId">Next Book</router-link>
+            <div v-else>no reviews yet</div>
+            <!-- <router-link :to="'/book/'+book.prevBookId">Prev Book</router-link> | 
+            <router-link :to="'/book/'+book.nextBookId">Next Book</router-link> -->
             <button @click="toggleEditReview">Add Review</button>
             <add-review v-if="editReview" @new-review="addReview" @close="toggleEditReview"></add-review>
             <button @click="close" @keyup.esc="close">close</button>
@@ -68,7 +69,7 @@ export default {
         .removeReview(this.book.id, reviewId)
         .then((book) => {
           this.book = book
-          eventBus.showSuccessMsg('review removed successfuly')
+          eventBus.showSuccessMsg('review removed successfully')
         })
         .catch((error) => {
           console.log(error)
@@ -79,9 +80,8 @@ export default {
       bookService
         .addReview(this.book.id, newReview)
         .then((book) => {
-          console.log('recived', newReview)
           this.book = book
-          eventBus.showSuccessMsg('review added successfuly')
+          eventBus.showSuccessMsg('review added successfully')
           this.toggleEditReview()
         })
         .catch((error) => {
@@ -119,9 +119,9 @@ export default {
       else if (price < 20) return 'green'
       return ''
     },
-    formatedPrice() {
+    formattedPrice() {
       var listPrice = this.book.listPrice
-      return utilService.formatedPrice(this.book.language, listPrice.currencyCode, listPrice.amount)
+      return utilService.formattedPrice(this.book.language, listPrice.currencyCode, listPrice.amount)
     },
     getReviews() {
       return this.book.reviews

@@ -5,7 +5,7 @@ export default {
   template: `
         <img :src="book.thumbnail" alt="">
         <h3 class="book-title">{{book.title}}</h3>
-        <span class="book-price">{{formatedPrice}}</span>
+        <span class="book-price">{{formattedPrice}}</span>
         <span>by {{getAuthors}}</span>
         <!-- rating stars -->
         <!-- is on sale -->
@@ -18,9 +18,9 @@ export default {
   },
   methods: {},
   computed: {
-    formatedPrice() {
+    formattedPrice() {
       var listPrice = this.book.listPrice
-      return utilService.formatedPrice(this.book.language, listPrice.currencyCode, listPrice.amount)
+      return utilService.formattedPrice(this.book.language, listPrice.currencyCode, listPrice.amount)
     },
     getAuthors() {
       return this.book.authors.join(', ')

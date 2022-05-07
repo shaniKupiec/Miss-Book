@@ -3,7 +3,7 @@ import { utilService } from '../services/util-service.js'
 export default {
   template: `
         <section class="review-modal flex column justify-center align-center">
-            <form v-on:submit.prevent="submit">
+            <form v-on:submit.prevent="submit" class="flex column align-center">
                 <input type="text" v-model="review.name" ref="nameInput">
                 <input type="number" min="1" max="5" v-model="review.rating">
                 <input type="date" v-model="review.readAt" required>

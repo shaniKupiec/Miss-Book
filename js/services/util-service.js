@@ -2,12 +2,12 @@ export const utilService = {
   saveToStorage,
   loadFromStorage,
   makeId,
-  formatedPrice,
+  formattedPrice,
   makeId2,
   getRandomInt,
 }
 
-function formatedPrice(lang, currency, price) {
+function formattedPrice(lang, currency, price) {
   return new Intl.NumberFormat(lang, { style: 'currency', currency }).format(price)
 }
 

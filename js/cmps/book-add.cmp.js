@@ -41,7 +41,7 @@ export default {
       bookService
         .addGoogleBook(newBook)
         .then(() => {
-          eventBus.showSuccessMsg('book added successfuly')
+          eventBus.showSuccessMsg('book added successfully')
           this.showModal = false
           this.$emit('add-book')
         })
