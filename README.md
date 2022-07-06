@@ -5,7 +5,8 @@
 
 ## Features
 - Using reusable components such as long text
-- Filtering
+- Filter
+- Search
 - Books CRUD
 - Adding new books to the store using external api
 - User message after adding and removing reviews
